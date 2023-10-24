@@ -15,6 +15,12 @@ class HomeScreenState extends State<HomeScreen> {
     Stock(name: 'Nifty 50', symbol: 'A', price: 100.00, percentage: -1.34, logoUrl: 'https://s3-symbol-logo.tradingview.com/indices/nifty-50--600.png'),
     Stock(name: 'Sensex', symbol: 'B', price: 150.00, percentage: 1.34, logoUrl: 'https://s3-symbol-logo.tradingview.com/indices/bse-sensex--600.png'),
     Stock(name: 'Nasdaq', symbol: 'C', price: 75.00, percentage: 0.30, logoUrl: 'https://www.nasdaq.com/sites/acquia.prod/files/styles/355x355/public/2020/09/24/nasdaq.jpg'),
+    Stock(name: 'Nasdaq', symbol: 'C', price: 75.00, percentage: 0.30, logoUrl: 'https://www.nasdaq.com/sites/acquia.prod/files/styles/355x355/public/2020/09/24/nasdaq.jpg'),
+    Stock(name: 'Nasdaq', symbol: 'C', price: 75.00, percentage: 0.30, logoUrl: 'https://www.nasdaq.com/sites/acquia.prod/files/styles/355x355/public/2020/09/24/nasdaq.jpg'),
+    Stock(name: 'Nasdaq', symbol: 'C', price: 75.00, percentage: 0.30, logoUrl: 'https://www.nasdaq.com/sites/acquia.prod/files/styles/355x355/public/2020/09/24/nasdaq.jpg'),
+    Stock(name: 'Nasdaq', symbol: 'C', price: 75.00, percentage: 0.30, logoUrl: 'https://www.nasdaq.com/sites/acquia.prod/files/styles/355x355/public/2020/09/24/nasdaq.jpg'),
+    Stock(name: 'Nasdaq', symbol: 'C', price: 75.00, percentage: 0.30, logoUrl: 'https://www.nasdaq.com/sites/acquia.prod/files/styles/355x355/public/2020/09/24/nasdaq.jpg'),
+    Stock(name: 'Nasdaq', symbol: 'C', price: 75.00, percentage: 0.30, logoUrl: 'https://www.nasdaq.com/sites/acquia.prod/files/styles/355x355/public/2020/09/24/nasdaq.jpg'),
   ];
 
   late List<Stock> displayedStocks;
@@ -70,6 +76,7 @@ class HomeScreenState extends State<HomeScreen> {
               ),
               onChanged: (query) => _filterStocks(query),
             ),
+            const SizedBox(height: 10),
             Expanded(
               child: ListView.builder(
                 itemCount: displayedStocks.length,

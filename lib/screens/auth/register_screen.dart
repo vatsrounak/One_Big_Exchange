@@ -1,5 +1,8 @@
-import 'package:flutter/material.dart';
+import 'dart:convert';
 
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../theme.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -10,25 +13,48 @@ class RegisterPage extends StatefulWidget {
 }
 
 class RegisterPageState extends State<RegisterPage> {
+  final usernameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
   // SignUp User
-  void registerUser() async {
+  Future<void> registerUser() async {
     showDialog(
-      context: context,
-      builder: (context) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      },
+        context: context,
+        builder: (context) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
     );
+
     try {
+      // Make an HTTP POST request to the registration API
+      final response = await http.post(
+        Uri.parse('http://localhost:8000/api/register/'), // Replace with your API URL
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(<String, String>{
+          'username': usernameController.text,
+          'email': emailController.text,
+          'password': passwordController.text,
+        }),
+      );
+
       Navigator.pop(context);
-      throw Future.error("error");
-      // Navigator.pushNamed(context, '/preferences');
+
+      if (response.statusCode == 200) {
+        // Successful register, save email and username in shared preferences
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setString('email', usernameController.text);
+        prefs.setString('username', usernameController.text);
+        Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+      } else {
+        showErrorDialog('Registration failed');
+      }
     } catch (e) {
-      // Navigator.pop(context);
+      Navigator.pop(context);
       showErrorDialog('Registration failed');
     }
   }
@@ -104,6 +130,26 @@ class RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
                 const SizedBox(height: 25),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: TextField(
+                    controller: usernameController,
+                    obscureText: false,
+                    decoration: InputDecoration(
+                      enabledBorder: const OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.grey.shade400),
+                      ),
+                      fillColor: Colors.grey.shade200,
+                      filled: true,
+                      hintText: "Username",
+                      hintStyle: TextStyle(color: Colors.grey[500]),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextField(

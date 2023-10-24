@@ -1,5 +1,7 @@
+import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
 import '../../theme.dart';
 
 class LoginPage extends StatefulWidget {
@@ -10,26 +12,47 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
-  final emailController = TextEditingController();
+  final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
   Future<void> signInUser() async {
     showDialog(
-      context: context,
-      builder: (context) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      },
+        context: context,
+        builder: (context) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }
     );
 
     try {
+      // Make an HTTP POST request to the login API
+      final response = await http.post(
+        Uri.parse('http://localhost:8000/api/login/'), // Replace with your API URL
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode(<String, String>{
+          'username': usernameController.text, // Assuming the username is an username
+          'password': passwordController.text,
+        }),
+      );
+
       Navigator.pop(context);
-      Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
-      // Navigate to home page or do something else after successful sign-in
+
+      if (response.statusCode == 200) {
+        // Successful login, save email and username in shared preferences
+        final prefs = await SharedPreferences.getInstance();
+        prefs.setString('email', usernameController.text);
+        prefs.setString('username', usernameController.text);
+        Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
+        // Navigate to the home page or do something else after successful sign-in
+      } else {
+        showErrorDialog('Sign-in failed. Please check your username and password');
+      }
     } catch (e) {
       Navigator.pop(context);
-      showErrorDialog('Sign-in failed');
+      showErrorDialog('Sign-in failed $e');
     }
   }
 
@@ -38,7 +61,7 @@ class LoginPageState extends State<LoginPage> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: Colors.deepPurple,
+          backgroundColor: Colors.black,
           title: const Center(
             child: Text(
               'Error',
@@ -65,7 +88,7 @@ class LoginPageState extends State<LoginPage> {
 
   @override
   void dispose() {
-    emailController.dispose();
+    usernameController.dispose();
     passwordController.dispose();
     super.dispose();
   }
@@ -97,7 +120,7 @@ class LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 15),
                 const Text(
-                  'Login with your Email & Password',
+                  'Login with your username & Password',
                   style: TextStyle(
                     color: Colors.grey,
                     fontSize: 16,
@@ -107,7 +130,7 @@ class LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: TextField(
-                    controller: emailController,
+                    controller: usernameController,
                     obscureText: false,
                     decoration: InputDecoration(
                       enabledBorder: const OutlineInputBorder(
@@ -118,7 +141,7 @@ class LoginPageState extends State<LoginPage> {
                       ),
                       fillColor: Colors.grey.shade200,
                       filled: true,
-                      hintText: "Email",
+                      hintText: "username",
                       hintStyle: TextStyle(color: Colors.grey[500]),
                     ),
                   ),
@@ -151,9 +174,14 @@ class LoginPageState extends State<LoginPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text(
-                        'Forgot Password?',
-                        style: TextStyle(color: Colors.grey[600]),
+                      GestureDetector(
+                        child: Text(
+                          'Forgot Password?',
+                          style: TextStyle(color: Colors.grey[600]),
+                        ),
+                        onTap: (){
+                          Navigator.pushNamedAndRemoveUntil(context, '/forget-password', (route) => false);
+                        },
                       ),
                     ],
                   ),

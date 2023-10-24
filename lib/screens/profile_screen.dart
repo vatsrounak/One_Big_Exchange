@@ -1,8 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../theme.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
+
+  @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  @override
+  void initState() {
+    super.initState();
+    getUsername(); // Call a function to retrieve and set the username
+  }
+
+  Future<void> getUsername() async {
+    final prefs = await SharedPreferences.getInstance();
+    final savedUsername = prefs.getString('username');
+    if (savedUsername != null) {
+      setState(() {
+        username = savedUsername;
+      });
+    }
+  }
+
+  String username = '';
 
   @override
   Widget build(BuildContext context) {
@@ -38,20 +62,10 @@ class ProfileScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Text(
-                          'John Doe',
+                          username,
                           style: TextStyle(
                             fontSize: 24,
                             fontFamily: 'Oswald',
-                            color: myTheme.primaryColorDark,
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          'john.doe@email.com',
-                          style: TextStyle(
-                            fontSize: 16,
                             color: myTheme.primaryColorDark,
                           ),
                         ),
