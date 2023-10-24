@@ -104,7 +104,7 @@ class ProfileScreen extends StatelessWidget {
                                   children: [
                                     Icon(Icons.monetization_on),
                                     SizedBox(height: 10,),
-                                    Text("Deposit"),
+                                    Text("Withdraw"),
                                   ],
                                 ),
                               ),
@@ -150,7 +150,9 @@ class ProfileScreen extends StatelessWidget {
                 'Log Out',
                 style: TextStyle(color: Colors.red),
               ),
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
+              },
             ),
           ],
         ),

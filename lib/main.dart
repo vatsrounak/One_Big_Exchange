@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'My First Application',
       theme: myTheme,
-      initialRoute: '/',
+      initialRoute: '/welcome',
       routes: routes,
     );
   }

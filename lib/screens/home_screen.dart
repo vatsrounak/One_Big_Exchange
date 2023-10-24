@@ -1,8 +1,39 @@
 import 'package:flutter/material.dart';
-import '../theme.dart';
 
-class HomeScreen extends StatelessWidget {
+import '../models/stock_model.dart';
+import '../widgets/stock_card.dart';
+
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  HomeScreenState createState() => HomeScreenState();
+}
+
+class HomeScreenState extends State<HomeScreen> {
+  final List<Stock> stocks = [
+    Stock(name: 'Nifty 50', symbol: 'A', price: 100.00, percentage: -1.34, logoUrl: 'https://s3-symbol-logo.tradingview.com/indices/nifty-50--600.png'),
+    Stock(name: 'Sensex', symbol: 'B', price: 150.00, percentage: 1.34, logoUrl: 'https://s3-symbol-logo.tradingview.com/indices/bse-sensex--600.png'),
+    Stock(name: 'Nasdaq', symbol: 'C', price: 75.00, percentage: 0.30, logoUrl: 'https://www.nasdaq.com/sites/acquia.prod/files/styles/355x355/public/2020/09/24/nasdaq.jpg'),
+  ];
+
+  late List<Stock> displayedStocks;
+
+  @override
+  void initState() {
+    super.initState();
+    displayedStocks = List.from(stocks);
+  }
+
+  void _filterStocks(String query) {
+    setState(() {
+      displayedStocks = stocks
+          .where((stock) =>
+      stock.name.toLowerCase().contains(query.toLowerCase()) ||
+          stock.symbol.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,44 +47,45 @@ class HomeScreen extends StatelessWidget {
               height: 50,
             ),
             Center(
-                child: Image.asset(
-                  "assets/images/logo.png",
-                  height: 70,
-                )),
-            const SizedBox(height: 10,),
-            const Padding(
-              padding: EdgeInsets.only(left: 16),
-              child: Text(
-                'Settings',
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              child: Image.asset(
+                "assets/images/logo.png",
+                height: 70,
               ),
             ),
             const SizedBox(height: 20),
-            ListTile(
-              leading: const Icon(Icons.person),
-              title: const Text('Account Information'),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: const Icon(Icons.credit_card),
-              title: const Text('Payment Methods'),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: const Icon(Icons.settings),
-              title: const Text('Settings'),
-              onTap: () {},
-            ),
-            ListTile(
-              leading: const Icon(
-                Icons.exit_to_app,
-                color: Colors.red,
+            TextField(
+              decoration: InputDecoration(
+                hintText: 'Search stocks...',
+                prefixIcon: const Icon(
+                  Icons.search,
+                  color: Colors.grey, // Color of the search icon
+                ),
+                filled: true,
+                fillColor: Colors.grey[100], // Background color of the search box
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(15.0), // Adjust the border radius as needed
+                  borderSide: BorderSide.none, // Remove the default border
+                ),
+                contentPadding: const EdgeInsets.all(16.0), // Adjust the padding as needed
               ),
-              title: const Text(
-                'Log Out',
-                style: TextStyle(color: Colors.red),
+              onChanged: (query) => _filterStocks(query),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: displayedStocks.length,
+                itemBuilder: (context, index) {
+                  final stock = displayedStocks[index];
+                  return StockCard(
+                    logoImageUrl: stock.logoUrl,
+                    name: stock.name,
+                    price: stock.price,
+                    percentage: stock.percentage,
+                    onSubscribe: () {
+                      // Implement the subscription logic for the stock
+                    },
+                  );
+                },
               ),
-              onTap: () {},
             ),
           ],
         ),

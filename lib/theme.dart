@@ -14,4 +14,13 @@ final ThemeData myTheme = ThemeData(
       color: Color(0xFF101820),
     )
   ),
+  bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+    backgroundColor: Colors.black,
+    selectedIconTheme: IconThemeData(color: Color(0xFFE5F64A)),
+    selectedLabelStyle: TextStyle(color: Color(0xFFE5F64A)),
+    unselectedIconTheme: IconThemeData(color: Colors.white),
+    unselectedLabelStyle: TextStyle(color: Colors.white),
+    unselectedItemColor: Colors.white,
+    selectedItemColor: Color(0xFFE5F64A),
+  ),
 );

@@ -25,7 +25,7 @@ class LoginPageState extends State<LoginPage> {
 
     try {
       Navigator.pop(context);
-      Navigator.pushNamed(context, "/");
+      Navigator.pushNamedAndRemoveUntil(context, '/', (route) => false);
       // Navigate to home page or do something else after successful sign-in
     } catch (e) {
       Navigator.pop(context);
@@ -194,7 +194,7 @@ class LoginPageState extends State<LoginPage> {
                     const SizedBox(width: 4),
                     GestureDetector(
                       onTap: (){
-                        Navigator.pushNamed(context, "/register");
+                        Navigator.pushNamedAndRemoveUntil(context, '/register', (route) => false);
                       },
                       child: Text(
                         'Register now',

@@ -177,7 +177,7 @@ class RegisterPageState extends State<RegisterPage> {
                     const SizedBox(width: 4),
                     GestureDetector(
                       onTap: (){
-                        Navigator.pushNamed(context, "/login");
+                        Navigator.pushNamedAndRemoveUntil(context, '/login', (route) => false);
                       },
                       child: Text(
                         'Login now',
