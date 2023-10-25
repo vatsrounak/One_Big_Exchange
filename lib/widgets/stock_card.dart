@@ -3,6 +3,7 @@ import 'package:one_big_exchange/theme.dart';
 
 class StockCard extends StatelessWidget {
   final String logoImageUrl;
+  final String symbol;
   final String name;
   final double price;
   final double percentage;
@@ -10,6 +11,7 @@ class StockCard extends StatelessWidget {
 
   const StockCard({super.key,
     required this.logoImageUrl,
+    required this.symbol,
     required this.name,
     required this.price,
     required this.percentage,
@@ -44,32 +46,27 @@ class StockCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Text(
-                    name,
+                    symbol,
                     style: const TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '\$${price.toStringAsFixed(2)}', // Display price
-                        style: const TextStyle(
-                          fontSize: 14,
-                          color: Colors.grey,
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          name, // Display price
+                          style: const TextStyle(
+                            fontSize: 10,
+                            color: Colors.grey,
+                          ),
                         ),
-                      ),
-                      const SizedBox(width: 10),
-                      Text(
-                        '${percentage.toStringAsFixed(2)}%',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: percentageColor, // Set text color based on percentage
-                        ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),

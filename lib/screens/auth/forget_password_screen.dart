@@ -42,11 +42,11 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
         // Password reset email sent successfully
         showSuccessModal();
       } else {
-        showErrorDialog('Failed to send reset instructions');
+        showErrorDialog('Failed to send Reset Email');
       }
     } catch (e) {
       Navigator.pop(context);
-      showErrorDialog('Failed to send reset instructions');
+      showErrorDialog('Failed to send Reset Email : $e');
     }
   }
 
@@ -55,7 +55,7 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: Colors.deepPurple,
+          backgroundColor: Colors.black,
           title: const Center(
             child: Text(
               'Error',
@@ -104,12 +104,15 @@ class ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   fontSize: 18,
                 ),
               ),
-              const SizedBox(height: 10),
-              const Text(
-                "A password reset instruction has been sent to your email.",
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 16,
+              const SizedBox(height: 20),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text(
+                  "A password reset instruction has been sent to your email.",
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 16,
+                  ),
                 ),
               ),
               const SizedBox(height: 20),

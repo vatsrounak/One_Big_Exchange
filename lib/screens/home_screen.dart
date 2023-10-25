@@ -12,15 +12,14 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen> {
   final List<Stock> stocks = [
-    Stock(name: 'Nifty 50', symbol: 'A', price: 100.00, percentage: -1.34, logoUrl: 'https://s3-symbol-logo.tradingview.com/indices/nifty-50--600.png'),
-    Stock(name: 'Sensex', symbol: 'B', price: 150.00, percentage: 1.34, logoUrl: 'https://s3-symbol-logo.tradingview.com/indices/bse-sensex--600.png'),
-    Stock(name: 'Nasdaq', symbol: 'C', price: 75.00, percentage: 0.30, logoUrl: 'https://www.nasdaq.com/sites/acquia.prod/files/styles/355x355/public/2020/09/24/nasdaq.jpg'),
-    Stock(name: 'Nasdaq', symbol: 'C', price: 75.00, percentage: 0.30, logoUrl: 'https://www.nasdaq.com/sites/acquia.prod/files/styles/355x355/public/2020/09/24/nasdaq.jpg'),
-    Stock(name: 'Nasdaq', symbol: 'C', price: 75.00, percentage: 0.30, logoUrl: 'https://www.nasdaq.com/sites/acquia.prod/files/styles/355x355/public/2020/09/24/nasdaq.jpg'),
-    Stock(name: 'Nasdaq', symbol: 'C', price: 75.00, percentage: 0.30, logoUrl: 'https://www.nasdaq.com/sites/acquia.prod/files/styles/355x355/public/2020/09/24/nasdaq.jpg'),
-    Stock(name: 'Nasdaq', symbol: 'C', price: 75.00, percentage: 0.30, logoUrl: 'https://www.nasdaq.com/sites/acquia.prod/files/styles/355x355/public/2020/09/24/nasdaq.jpg'),
-    Stock(name: 'Nasdaq', symbol: 'C', price: 75.00, percentage: 0.30, logoUrl: 'https://www.nasdaq.com/sites/acquia.prod/files/styles/355x355/public/2020/09/24/nasdaq.jpg'),
-    Stock(name: 'Nasdaq', symbol: 'C', price: 75.00, percentage: 0.30, logoUrl: 'https://www.nasdaq.com/sites/acquia.prod/files/styles/355x355/public/2020/09/24/nasdaq.jpg'),
+    Stock(name: 'New York Stock Exchange', symbol: 'NYSE', price: 100.00, percentage: -1.34, logoUrl: 'https://logodownload.org/wp-content/uploads/2019/07/nyse-logo-0.png'),
+    Stock(name: 'National Association of Securities Dealers Automated Quotations', symbol: 'NASDAQ', price: 150.00, percentage: 1.34, logoUrl: 'https://i.pinimg.com/originals/1f/31/94/1f31948775d68f34474cad7a7eba0ed4.png'),
+    Stock(name: 'Boston Stock Exchange', symbol: 'BSE', price: 75.00, percentage: 0.30, logoUrl: 'https://s3-symbol-logo.tradingview.com/boston-scientific--600.png'),
+    Stock(name: 'Chicago Options Exchange', symbol: 'CBOE', price: 75.00, percentage: 0.30, logoUrl: 'https://www.financemagnates.com/wp-content/uploads/fxmag/2014/03/CBOE-logo.png'),
+    Stock(name: 'Chicago Board of Trade', symbol: 'CBOT', price: 75.00, percentage: 0.30, logoUrl: 'https://i.redd.it/9mn6unukjd911.png'),
+    Stock(name: 'Chicago Mercantile Exchange', symbol: 'CME', price: 75.00, percentage: 0.30, logoUrl: 'https://www.ampfutures.com/hubfs/CME_Group-Logo.png'),
+    Stock(name: 'International Securities Exchange', symbol: 'ISE', price: 75.00, percentage: 0.30, logoUrl: 'https://www.weareguernsey.com/media/4178/tise.jpg'),
+    Stock(name: 'National Stock Exchange', symbol: 'NSX', price: 75.00, percentage: 0.30, logoUrl: 'https://logowik.com/content/uploads/images/nse-national-stock-exchange-of-india5651.jpg'),
   ];
 
   late List<Stock> displayedStocks;
@@ -84,6 +83,7 @@ class HomeScreenState extends State<HomeScreen> {
                   final stock = displayedStocks[index];
                   return StockCard(
                     logoImageUrl: stock.logoUrl,
+                    symbol: stock.symbol,
                     name: stock.name,
                     price: stock.price,
                     percentage: stock.percentage,
